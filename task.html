@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        /* 🌈 Animated Gradient Background */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.back-button {
+    margin-right: 1430px;
+    background-color: #ff6bb594;
+    border: 2px solid #1e3c72;
+    color: #1e3c72;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.back-button:hover {
+    background-color: #1e3c72;
+    color: #ff6bb594;
+    border: 2px solid #ff6bb5;;
+}
+/* Improved Background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #1e3c72, #2a5298a4, #ff6bb594, #ff65dee8);
+    background-size: 400% 400%;
+    animation: gradientAnimation 3s infinite ease-in-out;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    min-height: 100vh;
+}
+
+/* Centered Main Container */
+.container, .dashboard {
+    background: rgb(240, 237, 237);
+    padding: 25px;
+    border-radius: 15px;
+    border: 3px solid #2a5298;
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    margin: auto;
+    color: black;
+    transition: transform 0.3s ease-in-out;
+}
+
+.container:hover, .dashboard:hover {
+    transform: scale(1.02);
+}
+/* Task Input Box */
+.task-input {
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 12px;
+    width: 75%;
+    border: 2px solid #2a5298;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+    outline: none;
+}
+/* Buttons */
+button {
+    padding: 12px;
+    border: none;
+    background: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    /* transition: all 0.3s ease-in-out; */
+    font-size: 16px;
+}
+
+/* Task List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f4f4f4;
+    margin: 8px 0;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    font-size: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+li:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+/* Action Buttons */
+.delete-btn, .complete-btn {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.delete-btn {
+    background: red;
+}
+
+.complete-btn {
+    background: #007bff;
+}
+
+/* Completed Task Style */
+.completed {
+    text-decoration: line-through;
+    color: gray;
+    opacity: 0.7;
+}/* Dashboard Styling */
+.dashboard {
+    margin-top: 20px;
+    text-align: left;
+    padding: 25px;
+    border: 3px solid #2a5298;
+}
+
+.dashboard h2 {
+    text-align: center;
+    color: #2a5298;
+}
+
+.dashboard button {
+    background-color: #2a5298;
+    display: block;
+    color: #f4f4f4;
+    margin-top: 20px;
+}
+/* Improved Progress Bar */
+.progress-bar {
+    height: 14px;
+    background: #ddd;
+    border-radius: 7px;
+    margin-top: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(135deg, #28a745, #218838);
+    width: 0;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container, .dashboard {
+        max-width: 90%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+.back-button{
+    text-decoration: none;
+  color: white;
+  background-color: #ff6bb594 ; /* Orange for button */
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+font-size: 20px;
+position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.back-button:hover, 
+.back-button:active {
+    background: #1e3c72 !important; /* Green */
+    color: white !important;
+}
+.back-button:hover {
+    background: #0056b3; /* Darker Blue */
+    transform: scale(1.05); 
+}
+#introVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1000;
+        }
+
+        @keyframes rotateOut {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .rotateOut {
+            animation: rotateOut 0.5s ease-in-out forwards;
+        }
+  
+</style>
+</head>
+<body onload="loadTasks()"> 
+    <a href="dashboard.html" class="back-button">Back to Home</a>
+    <video id="introVideo" autoplay muted>
+        <source src="Untitled design (2).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="container">
+        <h1>📌 Task Manager</h1>
+        <div class="task-input">
+            <input type="text" id="task" placeholder="Enter your task...">
+            <input type="datetime-local" id="task-date">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+        <ul id="task-list"></ul>
+    </div>
+
+    <div class="dashboard">
+        <h2>User Dashboard</h2>
+        <button>Total Tasks: <span id="total-tasks">0</span></button>
+        <button>Completed Tasks: <span id="completed-tasks">0</span></button>
+        <button>Pending Tasks: <span id="pending-tasks">0</span></button>
+        <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar"></div></div>
+    </div>
+    <audio id="alarm" src="level-up-191997.mp3"></audio>
+
+    <script>
+        function addTask() {
+    let taskInput = document.getElementById("task");
+    let taskValue = taskInput.value.trim();
+    let taskDate = document.getElementById("task-date").value;
+    if (taskValue === "") return;
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push({ text: taskValue, date: taskDate, completed: false });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    renderTasks();
+    updateDashboard();
+    scheduleNotification(taskValue, taskDate);
+}
+document.getElementById("introVideo").addEventListener("ended", function() {
+            this.classList.add("rotateOut"); // Apply rotation animation
+            setTimeout(() => {
+                this.style.display = "none"; // Hide after animation
+            }, 500);
+        });
+        setTimeout(() => {
+    let introVideo = document.getElementById("introVideo");
+    introVideo.classList.add("rotateOut"); // Apply rotation effect
+    setTimeout(() => {
+        introVideo.style.display = "none"; // Hide after animation ends
+    }, 2000); // Wait for animation to complete (1s)
+}, 1000); // Play intro video for
+
+function scheduleNotification(task, time) {
+    let taskTime = new Date(time).getTime();
+    let currentTime = new Date().getTime();
+    let delay = taskTime - currentTime;
+
+    if (delay > 0) {
+        setTimeout(() => {
+            let alarm = document.getElementById("alarm");
+            alarm.play().catch(error => console.log("Audio playback failed:", error)); // Play sound
+            setTimeout(() => {
+                alert(`Reminder: ${task}`); // Show alert after sound starts playing
+            }, 500); // Small delay to sync alert with sound
+        }, delay);
+    }
+}
+
+
+function renderTasks() {
+    let taskList = document.getElementById("task-list");
+    taskList.innerHTML = "";
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach((task, index) => {
+        let li = document.createElement("li");
+        li.innerHTML = `${task.text} 
+            <button class="complete-btn" onclick="toggleComplete(${index})">${task.completed ? 'Undo' : 'Complete'}</button>
+            <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>`;
+        if (task.completed) li.classList.add("completed");
+        taskList.appendChild(li);
+    });
+}
+
+function toggleComplete(index) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) ||  [];
+    tasks[index].completed = !tasks[index].completed;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks();
+    updateDashboard();
+}
+
+function deleteTask(index) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.splice(index, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    renderTasks();
+    updateDashboard();
+}
+function updateDashboard() {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let completedTasks = tasks.filter(task => task.completed).length;
+    let totalTasks = tasks.length;
+    let percentage = totalTasks ? (completedTasks / totalTasks) * 100 : 0;
+    document.getElementById("total-tasks").innerText = totalTasks;
+    document.getElementById("completed-tasks").innerText = completedTasks;
+    document.getElementById("pending-tasks").innerText = totalTasks - completedTasks;
+    document.getElementById("progress-bar").style.width = percentage + "%";
+}
+
+window.onload = function() {
+    renderTasks();
+    updateDashboard();
+};
+    </script>
+
+</body>
+</html>

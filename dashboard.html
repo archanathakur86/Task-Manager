@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height:max-content;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 470px;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e3c72, #2a5298); 
+    color: rgb(250, 247, 247);
+    padding: 20px;
+    align-items: center;
+}
+
+ /*Sidebar Heading */
+.sidebar h1 {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: whitesmoke;
+}
+
+/* Sidebar Buttons */
+.sidebar button {
+    width: 70%;
+    padding: 15px;
+    margin: 30px 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(17, 6, 6);
+    background: linear-gradient(to right, #ff7e7e, #ffb6b9); 
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+}
+
+.sidebar nav {
+    margin-left: 60px;
+}
+
+/* Hover Effect */
+.sidebar button:hover {
+    background: linear-gradient(to right, #ffb6b9, #cc2f2f);
+    transform: translateY(-3px); 
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/*Active (Click) Effect */
+.sidebar button:active {
+    transform: translateY(2px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+header {
+    background-color: #ffc0cb;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex: 1; 
+    background-color: #F8C8DC; 
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* margin-top: 100px; /
+    / margin-right: 40px; */
+}
+.user-form {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 390px;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    height: 60vh;
+
+}
+.user-form form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.user-form h2 {
+    font-size: 35px;
+}
+
+.user-form label {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 25px;
+}
+
+.user-form input {
+    font-size: 20px;
+}
+
+.user-form button {
+    font-size: 25px;
+}
+
+.user-form button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 60px;
+}
+.user-form button:hover {
+    background: #0056b3;
+}
+
+
+.details-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 390px;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.details-box h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.details-box p {
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+.submitted-details {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    width: 390px;
+    margin: auto;
+    text-align: center;
+    font-size: 22px;
+    height: 440px;
+}
+
+.submitted-details h2 {
+    font-size: 50px;
+    color: rgb(25, 22, 26);
+    margin-bottom: 50px;
+}
+
+.submitted-details p {
+    font-size: 30px;
+    margin: 10px 0;
+    font-weight: bold;
+    color:#c41919;
+    text-align: center;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 166, 108, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(146, 80, 15, 0.3);
+}
+
+.modal-content h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color:#c41919;
+
+}
+.modal-content p{
+    color:darkgreen;
+    font-size: 30px;
+}
+
+#closeModal {
+    background: #02080d;
+    color: rgb(245, 245, 251);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+}
+#introVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1000;
+        }
+
+        @keyframes rotateOut {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .rotateOut {
+            animation: rotateOut 0.5s ease-in-out forwards;
+        }
+
+#closeModal:hover {
+    background: #287ade;
+}
+</style>
+</head>
+<body>
+     <!-- INTRO VIDEO -->
+     <video id="introVideo" autoplay muted>
+        <source src="Untitled design (2).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Dash Board</h1>
+            <nav>
+                <a href="task.html"><button>Task Manager</button></a>
+                <a href="calendar.html"><button>Calendar</button></a>
+                <a href="stopwatch.html"><button>Stopwatch</button></a>
+            </nav>
+        </aside>
+        <!-- <header></header> -->
+        <main class="main-content">
+            <section class="user-form">
+                <h2>User Details</h2>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required>
+
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+
+            <div id="welcomeModal" class="modal">
+                <div class="modal-content">
+                    <h2>🎉 Welcome to the Taskifypro! 🚀</h2>
+                    <p>Manage your tasks efficiently and stay productive.</p>
+                    <button id="closeModal">Let's Go!</button>
+                </div>
+            </div>
+
+
+
+        </main>
+
+        </main>
+    </div>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const formContainer = document.querySelector(".user-form"); 
+    const form = formContainer.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get input values
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const dob = document.getElementById("dob").value;
+
+        // Create the details box with emojis
+        const detailsBox = document.createElement("div");
+        detailsBox.classList.add("submitted-details");
+        detailsBox.innerHTML = 
+             `<h2> Submitted Details </h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Age:</strong> ${age}</p>
+            <p><strong>Date of Birth:</strong> ${dob}</p>
+            <p style="font-size: 40px;">👏🎉✨</p>`
+        ;
+
+        // Replace form with submitted details
+        formContainer.replaceWith(detailsBox);
+    });
+});
+document.getElementById("introVideo").addEventListener("ended", function() {
+            this.classList.add("rotateOut"); // Apply rotation animation
+            setTimeout(() => {
+                this.style.display = "none"; // Hide after animation
+            }, 500);
+        });
+        setTimeout(() => {
+    let introVideo = document.getElementById("introVideo");
+    introVideo.classList.add("rotateOut"); // Apply rotation effect
+    setTimeout(() => {
+        introVideo.style.display = "none"; // Hide after animation ends
+    }, 2000); // Wait for animation to complete (1s)
+}, 1000); // Play intro video for 1 second before effect starts
+
+
+window.onload = function () {
+    const modal = document.getElementById("welcomeModal");
+    const closeModal = document.getElementById("closeModal");
+
+    modal.style.display = "flex";
+
+    closeModal.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+};
+</script>
+
+</body>
+</html>

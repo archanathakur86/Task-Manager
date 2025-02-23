@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker Dashboard</title>
+    <!-- <link rel="stylesheet" href="template.css"> -->
+     <style>
+
+body {
+    background: url('calender.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-y: scroll;
+}
+
+.back-button {
+    background: #ff75758e;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    font-size:20px;
+} 
+.back-button:hover {
+    background: #d63031;
+}
+
+.heading {
+    text-align: center;
+    font-size: 25px;
+}
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.calendar {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 10px 4px rgba(136, 134, 134, 0.247);
+    text-align: center;
+    width: 800px;
+    margin-left: -200px;
+    margin-top: -50px;
+    background: rgba(187, 184, 184, 0.178); /* Background is transparent */
+    border: 1px solid black;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+button {
+    background: #ff7675;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+button:hover {
+    background: #d63031;
+}
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 25px;
+    color: #207dda;
+}
+
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.calendar-day {
+    background: #ecf0f100;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 25px;
+    transition: 0.3s; 
+}
+
+.calendar-day:hover {
+    background: #f8f9fa;
+    transform: scale(1.1);
+}
+/* Event Styling */
+.has-event {
+    background: #6c5ce7 !important;
+    color: white !important;
+}
+
+/* Popup */
+#event-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+#introVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1000;
+        }
+
+        @keyframes rotateOut {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .rotateOut {
+            animation: rotateOut 0.5s ease-in-out forwards;
+        }
+.back-button:hover, 
+.back-button:active {
+    background: #d63031!important; /* Green */
+    color: white !important;
+}
+.back-button:hover {
+    background: #0056b3; /* Darker Blue */
+    transform: scale(1.05); 
+}
+
+#event-popup input {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+#event-popup button {
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s; 
+} 
+#event-popup button:hover {
+    background: #d63031;
+    transform: scale(1.1);
+}
+/* EVENTS */
+
+.reminder {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(136, 134, 134, 0.247);
+    text-align: center; 
+    margin-left: -400px;
+    margin-right: -200px;
+    margin-top: -50px;
+    background: rgba(187, 184, 184, 0.178); /* Background is transparent */
+    border: 1px solid black;
+}
+
+.reminder h2 {
+    font-size: 30px;
+}
+
+/* Reminder List */
+#reminder-list {
+    margin-top: 15px;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+
+     </style>
+</head>
+<body>
+    <div class="dashboard">
+        <a href="dashboard.html" class="back-button">Back to Home Page</a>
+         <!-- INTRO VIDEO -->
+    <video id="introVideo" autoplay muted>
+        <source src="Untitled design (2).mp4" type="video/mp4">
+
+    </video>
+            <header class="heading">
+                <h1>Calendar</h1>
+            </header> 
+        <main class="main-content">
+        <div>
+            <section class="calendar">
+                <div class="calendar-header">
+                    <button onclick="prevMonth()">❮</button>
+                    <h2 id="current-month-year"></h2>
+                    <button onclick="nextMonth()">❯</button>
+                </div>
+                <div class="calendar-days">
+                    <div class="day">Sun</div>
+                    <div class="day">Mon</div>
+                    <div class="day">Tue</div>
+                    <div class="day">Wed</div>
+                    <div class="day">Thu</div>
+                    <div class="day">Fri</div>
+                    <div class="day">Sat</div>
+                </div>
+                <div id="calendar-grid"></div>
+                <!-- Event Popup -->
+               <div id="event-popup">
+                 <input type="text" id="event-input" placeholder="Add Event">
+                  <button onclick="saveEvent()">Save</button>
+                 <button onclick="closePopup()">Close</button>
+                </div>
+            </section>
+
+        </div>
+<div>
+            <section class="reminder">
+                <h2>Your Events</h2>
+                <ul id="reminder-list" class="reminder-grid"></ul>
+            </section>
+        </div>
+        </main>
+    </div>
+
+    <script>
+        let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        updateCalendar();
+    });
+    document.getElementById("introVideo").addEventListener("ended", function() {
+            this.classList.add("rotateOut"); // Apply rotation animation
+            setTimeout(() => {
+                this.style.display = "none"; // Hide after animation
+            }, 500);
+        });
+        setTimeout(() => {
+    let introVideo = document.getElementById("introVideo");
+    introVideo.classList.add("rotateOut"); // Apply rotation effect
+    setTimeout(() => {
+        introVideo.style.display = "none"; // Hide after animation ends
+    }, 2000); // Wait for animation to complete (1s)
+}, 1000); // Play intro video for
+
+    function updateCalendar() {
+        document.getElementById("current-month-year").innerText = `${monthNames[currentMonth]} ${currentYear}`;
+        let daysContainer = document.getElementById("calendar-grid");
+        daysContainer.innerHTML = "";
+
+        let firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+            let emptyCell = document.createElement("div");
+            daysContainer.appendChild(emptyCell);
+        }
+for (let day = 1; day <= daysInMonth; day++) {
+            let dayCell = document.createElement("div");
+            dayCell.className = "calendar-day";
+            dayCell.innerText = day;
+            dayCell.onclick = () => addEvent(day);
+            daysContainer.appendChild(dayCell);
+        }
+    }
+
+    function prevMonth() {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        updateCalendar();
+    }
+
+    function nextMonth() {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        updateCalendar();
+    }
+
+    function addTask() {
+        let taskText = document.getElementById("task-input").value;
+        let taskDate = document.getElementById("task-date").value;
+        if (!taskText) return alert("Enter a task!");
+
+        let li = document.createElement("li");
+        li.className = "task-item";
+        li.innerHTML = $`{taskText} - <small>${taskDate}</small> <button class='delete-btn' onclick='deleteTask(this)'>X</button>`;
+
+        document.getElementById("task-list").appendChild(li);
+        document.getElementById("task-input").value = "";
+        setReminder(taskText, taskDate);
+    }
+function deleteTask(btn) {
+        btn.parentElement.remove();
+    }
+
+    function addEvent(day) {
+        let eventText = prompt("Enter event:");
+        if (!eventText) return;
+
+        let reminderList = document.getElementById("reminder-list");
+        let reminderItem = document.createElement("li");
+        reminderItem.innerText = `📅 ${eventText} on ${monthNames[currentMonth]} ${day}, ${currentYear}`;
+        reminderList.appendChild(reminderItem);
+    }
+
+    function setReminder(task, date) {
+        let reminderList = document.getElementById("reminder-list");
+        let reminderItem = document.createElement("li");
+        reminderItem.innerText = `🔔 ${task} - ${date}`;
+        reminderList.appendChild(reminderItem);
+    }
+
+    </script>
+
+</body>
+</html>

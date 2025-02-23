@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer & Stopwatch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            background: radial-gradient(circle, #141E30, #243B55);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        
+        }
+        
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        .timer-display {
+            font-size: 5em;
+            margin: 30px 0;
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.8);
+        }
+
+        .controls button {
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: 0.3s;
+            color: white;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c);
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.5);
+        }
+
+        .controls button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+        }
+         .rotateOut {
+            animation: rotateOut 0.5s ease-in-out forwards;
+        }
+
+
+        input {
+            padding: 10px;
+            width: 25%;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            font-size: 1em;
+            text-align: center;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #logoImage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: auto;
+            z-index: 9999;
+            background: black;
+        }
+
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #introVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 1000;
+        }
+
+        @keyframes rotateOut {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .rotateOut {
+            animation: rotateOut 0.5s ease-in-out forwards;
+        }
+        .back-button{
+  text-decoration: none;
+  color: white;
+  background-color: rgb(45, 45, 63) ; /* Orange for button */
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block;
+font-size: 20px;
+position: absolute;
+    top: 20px;
+    left: 20px;
+        }
+        .back-button:hover, 
+.back-button:active {
+    background: #aab4be !important; /* Green */
+    color: white !important;
+}
+.back-button:hover {
+    background: #0056b3; /* Darker Blue */
+    transform: scale(1.05); 
+}
+    </style>
+</head>
+<body>
+
+    <a href="dashboard.html" class="back-button">Back to Home</a>
+
+    <!-- INTRO VIDEO -->
+    <video id="introVideo" autoplay muted>
+        <source src="Untitled design (2).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- BACKGROUND VIDEO -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="https://static.videezy.com/system/resources/previews/000/007/313/original/Plexus.mp4" type="video/mp4">
+    </video>
+
+    <!-- TIMER & STOPWATCH CONTAINER -->
+    <div class="container">
+        <h1>Timer & Stopwatch</h1>
+        <div class="timer-display">00:00:00</div>
+        <div class="controls">
+            <input type="number" id="hours" placeholder="Hrs">
+            <input type="number" id="minutes" placeholder="Mins">
+            <input type="number" id="seconds" placeholder="Secs">
+            <button onclick="startTimer()">Start Timer</button>
+            <button onclick="startStopwatch()">Start Stopwatch</button>
+            <button onclick="stopTimer()">Stop</button>
+            <button onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+
+    <audio id="alarm" src="beep-beep-beep-beep-80262.mp3"></audio>
+
+
+    <script>
+        document.getElementById("introVideo").addEventListener("ended", function() {
+            this.classList.add("rotateOut"); // Apply rotation animation
+            setTimeout(() => {
+                this.style.display = "none"; // Hide after animation
+            }, 500);
+        });
+        setTimeout(() => {
+    let introVideo = document.getElementById("introVideo");
+    introVideo.classList.add("rotateOut"); // Apply rotation effect
+    setTimeout(() => {
+        introVideo.style.display = "none"; // Hide after animation ends
+    }, 2000); // Wait for animation to complete (1s)
+}, 1000); // Play intro video for 1 second before effect starts
+
+
+        let timer;
+        let timeLeft;
+        let stopwatchTime = 0;
+        let stopwatchInterval;
+
+        function startTimer() {
+            let hours = parseInt(document.getElementById("hours").value) || 0;
+            let minutes = parseInt(document.getElementById("minutes").value) || 0;
+            let seconds = parseInt(document.getElementById("seconds").value) || 0;
+            timeLeft = (hours * 3600) + (minutes * 60) + seconds;
+            if (timeLeft <= 0) return;
+            clearInterval(timer);
+            timer = setInterval(updateTimer, 1000);
+        }
+        function playAlarm() {
+        let alarm = document.getElementById("alarmSound");
+        alarm.loop = true; // Alarm will keep repeating
+        alarm.play();
+    }
+
+    function stopAlarm() {
+        let alarm = document.getElementById("alarmSound");
+        alarm.pause();  // Pause the alarm sound
+        alarm.currentTime = 0;  // Reset the sound to start position
+    }
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+    clearInterval(timer);
+    window.onload = function() {
+    let bgVideo = document.getElementById("bgVideo");
+    bgVideo.play();
+};
+
+    alarm.play(); // Play alarm when time is up
+
+    // Show alert and stop alarm when user clicks OK
+    setTimeout(() => {
+        alert("⏰ Time's up! Click OK to stop the alarm.");
+        alarm.pause();
+        alarm.currentTime = 0; // Reset alarm
+    }, 100);
+    return;
+}
+
+            timeLeft--;
+            document.querySelector(".timer-display").innerText = formatTime(timeLeft);
+        } 
+        function startStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = setInterval(() => {
+                stopwatchTime++;
+                document.querySelector(".timer-display").innerText = formatTime(stopwatchTime);
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            clearInterval(stopwatchInterval);
+        }
+
+        function resetTimer() {
+            stopTimer();
+            document.querySelector(".timer-display").innerText = "00:00:00";
+        }
+
+        function formatTime(seconds) {
+            let hrs = Math.floor(seconds / 3600);
+            let mins = Math.floor((seconds % 3600) / 60);
+            let secs = seconds % 60;
+            return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+    </script>
+</body>
+</html>.
